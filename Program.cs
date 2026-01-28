@@ -1,5 +1,6 @@
 ﻿using SpaceManager.Models;
 using SpaceManager.Interfaces;
+using SpaceManager.Records;
 
 // Note que não importamos Records nem NaveCargueiro ainda para não dar erro
 Console.WriteLine("--- INICIANDO TESTE DA NAVE CAÇA ---");
@@ -32,3 +33,12 @@ NaveCargueiro cFox = new NaveCargueiro("c-fox", "Fox-C",10);
 cFox.Abastecer(25);
 
 cFox.Mover(100);
+
+Console.WriteLine("--- RESUMO DE VIAGEM DTO COM RECORDS ---");
+
+var veiculoDTO = new VeiculoDTO(cFox.Identificador,cFox.Modelo,cFox.ConsumoMedio);
+
+Console.WriteLine("Dados da nave: ");
+Console.WriteLine($"Nome: {veiculoDTO.Identificador}");
+Console.WriteLine($"Modelo: {veiculoDTO.Modelo}");
+Console.WriteLine($"Consumo Medio: {veiculoDTO.ConsumoMedio}");

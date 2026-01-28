@@ -5,7 +5,12 @@ public abstract class Veiculo
 {
     protected double _combustivel;
     protected string _modelo;
+    public string Modelo
+    {
+        get => _modelo;
+    }
     protected double _consumoMedio;
+    public double ConsumoMedio { get; set; }
     private string _identificador = string.Empty;
     public string Identificador
     {
