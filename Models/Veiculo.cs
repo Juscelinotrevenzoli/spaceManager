@@ -5,6 +5,7 @@ public abstract class Veiculo
 {
     protected double _combustivel;
     protected string _modelo;
+    protected double _consumoMedio;
     private string _identificador = string.Empty;
     public string Identificador
     {
@@ -23,6 +24,8 @@ public abstract class Veiculo
         _modelo = modelo;
         Identificador = identificador;
     }
+
+    //public abstract void Consumo(double distanci, double consumoMedio, double _combustivel);
 
     public abstract void Mover(double distancia);
     public virtual void Abastecer(double quantidade)

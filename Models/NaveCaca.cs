@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace SpaceManager.Models;
 
 using SpaceManager.Interfaces;
@@ -6,12 +5,14 @@ public class NaveCaca : Veiculo, ICombativel
 {
     public  NaveCaca(string modelo, string identificador) : base(modelo, identificador)
     {
-        _combustivel = 100;
+        _combustivel = 10;  
     }
+
 
     public override void Mover(double distancia)
     {
-        double consumo = distancia * 5;
+        double consumoMedio = 20;
+        double consumo = distancia / consumoMedio;
         if (_combustivel >= consumo)
         {
             _combustivel -= consumo;
@@ -23,12 +24,12 @@ public class NaveCaca : Veiculo, ICombativel
         }
     }
 
-    public bool Atirar()
+    public bool Atirar(double carga)
     {
-        if (_combustivel >= 10)
+        if (_combustivel >= carga)
         {
-            _combustivel -= 10;
-            Console.WriteLine($"{Identificador} disparou lasers! (-10 combustível)");
+            _combustivel -= carga;
+            Console.WriteLine($"{Identificador} disparou lasers! ( {carga} combustível (E utilizado o combustível para gerar enegia de desparo))");
             return true;
         }
 
