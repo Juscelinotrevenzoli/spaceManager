@@ -5,28 +5,29 @@ public class NaveCargueiro(string modelo, string identificador, double carga) : 
     //O T no final da propriedade e de toneladas
     protected double _cargaAtual = carga;
     protected double _pesoDoCargueiroT = 15;
-    
 
 
-    public override void Mover(double distancia)
+
+    public override string Mover(double distancia)
     {
+        string statusCarga;
         switch (_cargaAtual)
         {
             case <= 0:
                 ConsumoMedio = 50;
-                Console.WriteLine("Caminhão vazio");
+                statusCarga = "Caminhão vazio";
                 break;
             case > 0 and <= 20:
                 ConsumoMedio = 30;
-                Console.WriteLine("Carga leve/média");
+                statusCarga = "Carga leve/média";
                 break;
             case > 20 and <= 40:
                 ConsumoMedio = 15;
-                Console.WriteLine("Carga pesada");
+                statusCarga = "Carga pesada";
                 break;
             default:
                 ConsumoMedio = 5;
-                Console.WriteLine("Excesso de peso!");
+                statusCarga = "Excesso de peso!";
                 break;
         }
 
@@ -35,11 +36,11 @@ public class NaveCargueiro(string modelo, string identificador, double carga) : 
         if (_combustivel >= combustivelGasto)
         {
             _combustivel -= combustivelGasto;
-            Console.WriteLine($"{Identificador} (Cargueiro) moveu {distancia}Km. Combustivel restante: {_combustivel:F2}");
+            return $"{Identificador} (Cargueiro) moveu {distancia}Km com carga de {_cargaAtual}T,{statusCarga} Combustivel restante: {_combustivel:F2}";
         }
         else
         {
-            Console.WriteLine($"{Identificador} sem combustivel para mover {distancia}Km!");
+            return $"{Identificador} sem combustivel para mover {distancia}Km!";
         }
 
     }

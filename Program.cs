@@ -3,42 +3,56 @@ using SpaceManager.Interfaces;
 using SpaceManager.Records;
 
 // Note que não importamos Records nem NaveCargueiro ainda para não dar erro
-Console.WriteLine("--- INICIANDO TESTE DA NAVE CAÇA ---");
+// Console.WriteLine("--- INICIANDO TESTE DA NAVE CAÇA ---");
+// NaveCaca xWing = new("X-Wing", "Red-Five");
+// SpaceLogger.ImprimirStatus([
+//     xWing.Abastecer(100),
+//     xWing.Mover(100)
+// ]);
+// Console.WriteLine("--- INICIANDO TESTE DA NAVE CARGUEIRA ---");
+// Console.WriteLine("--- RESUMO DE VIAGEM DTO COM RECORDS ---");
 
-// 1. Instanciando a NaveCaca
-// Certifique-se de que o construtor na classe NaveCaca aceita (modelo, identificador)
-NaveCaca xWing = new NaveCaca("X-Wing", "Red-Five");
 
-// 2. Testando o Abastecimento (Método Virtual da base Veiculo)
-xWing.Abastecer(10);
-
-// 3. Testando a Movimentação (Método Override na NaveCaca)
-// Lembre-se: Caça gasta 5 por km. 20km = 100 de combustível.
-xWing.Mover(100); 
-
-// 4. Testando o Combate (Interface ICombativel)
-// Usamos o operador 'is' para verificar se a nave sabe lutar
-if (xWing is ICombativel atacante)
+// 1. Criando a Frota (Note como aceitamos tipos diferentes na mesma lista)
+List<Veiculo> frota = new List<Veiculo>
 {
-    Console.WriteLine("Sistemas de armas detectados!");
-    atacante.Atirar(0.1);
+    new NaveCaca("X-Wing", "Red-Five"),
+    new NaveCargueiro("Millennium Falcon", "Falcon-01", 30), // Carga pesada
+    new NaveCaca("TIE Fighter", "Black-One"),
+    new NaveExploradora("Voyager", "EXP-01") // Se você já criou a nova classe!
+};
+
+Console.WriteLine("======= SPACE MANAGER 2026 - CONTROLE DE FROTA =======");
+
+// 2. Abastecendo todas as naves
+Console.WriteLine("\n⛽ ABASTECENDO FROTA:");
+foreach (var nave in frota)
+{
+    // Capturamos a string que o método retorna
+    string logAbastecimento = nave.Abastecer(100); 
+    Console.WriteLine(logAbastecimento);
 }
 
-Console.WriteLine($"Status Final: {xWing.Identificador} - Combustível: {xWing.SaldoCombustivel}"); // Se você criou uma propriedade para ver o saldo
+// 3. Movimentando a frota (O Princípio Aberto/Fechado em ação)
+Console.WriteLine("\n🚀 ORDEM DE MOVIMENTAÇÃO (100km):");
+foreach (var nave in frota)
+{
+    // O Program não sabe se é caça ou carga, ele só pede para "Mover"
+    string relatorioViagem = nave.Mover(100);
+    Console.WriteLine(relatorioViagem);
+}
 
-Console.WriteLine("--- INICIANDO TESTE DA NAVE CARGUEIRA ---");
+// 4. Testando Combate apenas em quem é ICombativel
+Console.WriteLine("\n🔫 STATUS DE COMBATE:");
+foreach (var nave in frota)
+{
+    if (nave is ICombativel atacante)
+    {
+        // Aqui você pode precisar ajustar o Atirar para retornar string também se quiser ser 100% SOLID!
+        string relatorioDeCombate = atacante.Atirar(1.0);
+        Console.WriteLine(relatorioDeCombate);
+        
+    }
+}
 
-NaveCargueiro cFox = new NaveCargueiro("c-fox", "Fox-C",10);
-
-cFox.Abastecer(25);
-
-cFox.Mover(100);
-
-Console.WriteLine("--- RESUMO DE VIAGEM DTO COM RECORDS ---");
-
-var veiculoDTO = new VeiculoDTO(cFox.Identificador,cFox.Modelo,cFox.ConsumoMedio);
-
-Console.WriteLine("Dados da nave: ");
-Console.WriteLine($"Nome: {veiculoDTO.Identificador}");
-Console.WriteLine($"Modelo: {veiculoDTO.Modelo}");
-Console.WriteLine($"Consumo Medio: {veiculoDTO.ConsumoMedio}");
+Console.WriteLine("\n=====================================================");

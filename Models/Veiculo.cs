@@ -32,15 +32,15 @@ public abstract class Veiculo
 
     //public abstract void Consumo(double distanci, double consumoMedio, double _combustivel);
 
-    public abstract void Mover(double distancia);
-    public virtual void Abastecer(double quantidade)
+    public abstract string Mover(double distancia);
+    public virtual string Abastecer(double quantidade)
     {
         if (quantidade > 0)
         {
             _combustivel += quantidade;
-            Console.WriteLine($"{Identificador} abastecido com {quantidade} unidades.");
+            return $"{Identificador} abastecido com {quantidade} unidades.";
         }
-
+        return $"ALERTA: Quantidade de abastecimento inválida para a nave {Identificador}.";
 
     }
 }
